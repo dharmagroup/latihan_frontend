@@ -1,0 +1,73 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <div>
+        <input type="text" formControlName="fullname" placeholder="fullname">
+    </div>
+    <div>
+        <input type="email" formControlName="email" placeholder="email" required>
+    </div>
+    <div>
+        <select formControlName="education">
+            <option value="SMA">SMA</option>
+            <option value="S1">S1</option>
+        </select>
+    </div>
+    <button type="submit">{{text}}</button>
+</form>
+----------------------------------------------------------------------
+<h2>Personal Data</h2>
+<table width="100%" border="1">
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>ID</th>
+            <th>Fullname</th>
+            <th>Email</th>
+            <th>Education</th>
+            <th>#</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngIf="loading">
+            <td colspan="5" style="text-align: center;">
+                Sedang memuat...
+            </td>
+        </tr>
+        <tr *ngFor="let item of data; let number=index">
+            <td>{{ number+1 }}</td>
+            <td>{{ item.id }}</td>
+            <td>{{ item.fullname }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.education }}</td>
+            <td>
+                <button type="button" (click)="delete(item.id)">Hapus</button>
+                <button type="button" (click)="edit(item)">Edit</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+-------------------------------------------------------
+
+<div class="modal" *ngIf="isModal">
+    <div class="modal-body">
+        <div>
+            ID : {{ dataId }}
+        </div>
+        <form [formGroup]="formDataEdit" (ngSubmit)="update()">
+            <div>
+                <input type="text"  formControlName="fullname" placeholder="fullname">
+            </div>
+            <div>
+                <input type="email"  formControlName="email" placeholder="email" required>
+            </div>
+            <div>
+                <select formControlName="education">
+                    <option value="SMA">SMA</option>
+                    <option value="S1">S1</option>
+                </select>
+            </div>
+            <button type="submit">Update</button> | 
+            <button type="button" (click)="close()">Tutup</button>
+        </form>
+        </div>
+</div>
